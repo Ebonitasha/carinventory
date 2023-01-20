@@ -13,9 +13,11 @@ const Inventory = require('../model/inventory.js')
     })
 })
 
+
+
 //GET BY GENRE
-inventoryRouter.get("/search/genre", (req,res,next) => {
-    Inventory.find({Year: req.query.Year}, (err, inventory) =>{
+inventoryRouter.get("/search/Year", (req,res,next) => {
+    Inventory.find({Year: req.query.Year }, (err, inventory) =>{
         if(err){
             res.status(500)
             return next(err)
@@ -24,15 +26,25 @@ inventoryRouter.get("/search/genre", (req,res,next) => {
     })
 })
 
-// inventoryRouter.get("/search/genre", (req,res,next) => {
-//     Inventory.find({Make: req.query.Make} , (err, inventory) =>{
-//         if(err){
-//             res.status(500)
-//             return next(err)
-//         }
-//         return res.status(201).send(inventory)
-//     })
-// })
+inventoryRouter.get("/search/make", (req,res,next) => {
+    Inventory.find({Make: req.query.Make} , (err, inventory) =>{
+        if(err){
+            res.status(500)
+            return next(err)
+        }
+        return res.status(201).send(inventory)
+    })
+})
+
+inventoryRouter.get("/search/FuelType", (req,res,next) => {
+    Inventory.find({FuelType: req.query.FuelType} , (err, inventory) =>{
+        if(err){
+            res.status(500)
+            return next(err)
+        }
+        return res.status(201).send(inventory)
+    })
+})
 
 inventoryRouter.post("/", (req, res, next) => {
     const newItem = new Inventory(req.body)
@@ -45,7 +57,20 @@ inventoryRouter.post("/", (req, res, next) => {
     })
 })
 
+inventoryRouter.put("/:inventoryId", (req,res, next) => {
+    Inventory.findByIdAndUpdate(
+        {_id: req.params.inventoryId},
+        req.body, 
+        {new : true},
+        (err, updatedInventory) =>{
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.status(201).send(updatedInventory)
+        }
+    )
 
-
+})
 
 module.exports = inventoryRouter

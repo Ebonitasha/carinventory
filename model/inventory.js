@@ -26,7 +26,8 @@ const inventorySchema = new Schema({
         type: Number,
         required: true
     },
-    // imageURl: image,
+    Url: String,
+        
 
 })
 

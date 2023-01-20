@@ -16,6 +16,12 @@ mongoose.connect(`mongodb+srv://ebonitasha:Purplekisses2@cluster88.gfnymjn.mongo
 
 app.use("/carInventory", require("./routes/carInventoryRouter.js"))
 
-app.listen(6000, () =>{
+
+app.use((err, req, res, next) => {
+    console.log(err)
+    return res.send({errMsg: err.message})
+})
+
+app.listen(5000, () =>{
     console.log('Connected to server')
 })
